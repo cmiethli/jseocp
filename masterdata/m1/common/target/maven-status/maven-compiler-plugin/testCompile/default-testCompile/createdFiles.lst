@@ -1,0 +1,4 @@
+de\wbstraining\common\util\LinkUtilTest.class
+de\wbstraining\common\util\ParseQueryStringUnitTest.class
+de\wbstraining\common\security\Base64UnitTest.class
+de\wbstraining\common\web\UriUnitTest.class
