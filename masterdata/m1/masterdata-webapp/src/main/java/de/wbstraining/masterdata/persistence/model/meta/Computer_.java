@@ -13,7 +13,7 @@ import de.wbstraining.masterdata.persistence.model.Computer;
 @StaticMetamodel(Computer.class)
 public abstract class Computer_ {
 
-    public static volatile SingularAttribute<Computer, Integer> id;
+    public static volatile SingularAttribute<Computer, Long> id;
     public static volatile SingularAttribute<Computer, String> name;
     public static volatile SingularAttribute<Computer, String> macAddress;
     public static volatile SingularAttribute<Computer, String> systemVersion;

@@ -2,6 +2,7 @@ package de.wbstraining.masterdata.service.impl;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
@@ -51,4 +52,11 @@ public class ComputerServiceImpl extends AbstractService<Computer> implements IC
 		return dao;
 	}
 
+	@Override
+	public Computer findOne(String macAddress) {
+		Computer computer = new Computer();
+		computer.setMacAddress(macAddress);
+		Example<Computer> example = Example.of(computer);
+		return dao.findOne(example).get();
+	}
 }

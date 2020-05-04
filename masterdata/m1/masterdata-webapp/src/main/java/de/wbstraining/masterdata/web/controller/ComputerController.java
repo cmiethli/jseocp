@@ -70,11 +70,22 @@ public class ComputerController extends AbstractController<Computer, Computer> i
 
     // find - one
 
+    
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Computer findOne(@PathVariable("id") final Long id, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         return findOneInternal(id, uriBuilder, response);
     }
+    
+    /*
+    @RequestMapping(value = "/{macAddress}", method = RequestMethod.GET)
+    @ResponseBody
+    public Computer findOne(@PathVariable("macAddress") final String macAddress, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        // return findOneInternal(id, uriBuilder, response);
+    	return service.findOne(macAddress);
+    	// return findOneInternal(1L, uriBuilder, response);
+    }
+    */
 
     // create
 

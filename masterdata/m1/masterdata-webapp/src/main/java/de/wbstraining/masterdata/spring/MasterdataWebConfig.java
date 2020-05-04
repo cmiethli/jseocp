@@ -29,7 +29,7 @@ public class MasterdataWebConfig implements WebMvcConfigurer {
     // beans
 
     @Bean
-    public Docket mainConfig() { // @formatter:off
+    public Docket mainConfig() { 
         return new Docket(DocumentationType.SWAGGER_2)
                 .select().apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
@@ -38,9 +38,9 @@ public class MasterdataWebConfig implements WebMvcConfigurer {
                 .directModelSubstitute(LocalDate.class, String.class)
                 .genericModelSubstitutes(ResponseEntity.class)                
                 ;
-    }// @formatter:on
+    }
 
-    //
+   
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {

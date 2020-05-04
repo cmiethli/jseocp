@@ -17,7 +17,7 @@ import de.wbstraining.masterdata.spring.MasterdataWebConfig;
 })
 public class MasterdataApp {
 
-    private final static Class<?>[] CONFIGS = { // @formatter:off
+    private final static Class<?>[] CONFIGS = { 
             MasterdataContextConfig.class
             ,MasterdataPersistenceJpaConfig.class
             ,MasterdataServiceConfig.class
@@ -25,9 +25,7 @@ public class MasterdataApp {
             ,MasterdataWebConfig.class            
 
             ,MasterdataApp.class
-    }; // @formatter:on
-
-    //    
+    };  
 
     public static void main(final String... args) {
         final SpringApplication springApplication = new SpringApplication(CONFIGS);

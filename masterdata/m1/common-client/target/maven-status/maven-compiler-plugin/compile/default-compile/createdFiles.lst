@@ -1,12 +1,1 @@
-de\wbstraining\client\IDtoOperations.class
-de\wbstraining\client\util\HeaderUtil.class
-de\wbstraining\client\util\HeaderUtil$1.class
-de\wbstraining\client\util\UriUtil.class
-de\wbstraining\client\marshall\IMarshaller.class
-de\wbstraining\client\util\SearchUriBuilder$1.class
-de\wbstraining\client\util\HeaderUtil$2.class
-de\wbstraining\client\spring\CommonClientConfig.class
-de\wbstraining\client\template\AbstractBaseClientRestTemplate.class
-de\wbstraining\client\util\SearchUriBuilder.class
-de\wbstraining\client\template\IReadOnlyTemplateWithUri.class
-de\wbstraining\client\template\IRestClientWithUri.class
+de/wbstraining/client/util/SearchUriBuilder$1.class

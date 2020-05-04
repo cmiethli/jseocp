@@ -7,7 +7,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@ComponentScan({ "de.wbstraining.um.model" })
+// @ComponentScan({ "de.wbstraining.um.model" })
+@ComponentScan({ "de.wbstraining.masterdata.model" })
 @PropertySource({ "classpath:web-${webTarget:local}.properties" })
 public class MasterdataLiveTestConfig {
 
@@ -22,5 +23,4 @@ public class MasterdataLiveTestConfig {
         final PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
         return pspc;
     }
-
 }

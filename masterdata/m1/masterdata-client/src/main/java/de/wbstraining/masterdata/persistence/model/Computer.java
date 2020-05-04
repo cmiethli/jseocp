@@ -25,7 +25,7 @@ public class Computer implements INameableEntity, INameableDto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", insertable = false, nullable = false)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "name")
 	private String name;
@@ -74,12 +74,12 @@ public class Computer implements INameableEntity, INameableDto {
 
 	@Override
 	public Long getId() {
-		return Long.valueOf(id);
+		return id;
 	}
 
 	@Override
 	public void setId(Long id) {
-		this.id = id.intValue();
+		this.id = id;
 
 	}
 
@@ -190,10 +190,6 @@ public class Computer implements INameableEntity, INameableDto {
 
 	public void setComputerDeployStateId(Integer computerDeployStateId) {
 		this.computerDeployStateId = computerDeployStateId;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public void setName(String name) {

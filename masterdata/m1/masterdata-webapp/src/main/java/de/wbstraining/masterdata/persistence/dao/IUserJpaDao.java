@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import de.wbstraining.common.interfaces.IByNameApi;
 import de.wbstraining.masterdata.persistence.model.User;
 
-public interface IUserJpaDao extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>, IByNameApi<User> {
+public interface IUserJpaDao extends
+	JpaRepository<User, Long>, JpaSpecificationExecutor<User>, IByNameApi<User> {
     //
 }
