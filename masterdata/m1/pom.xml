@@ -1,0 +1,119 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<description>m1</description>
+	<name>masterdata-parent-m1</name>
+	<url>https://github.com/eugenp/restwithspring</url>
+
+	<groupId>de.wbstraining</groupId>
+	<artifactId>masterdata-parent-m1</artifactId>
+	<version>0.7.0-SNAPSHOT</version>
+	<packaging>pom</packaging>	
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.0.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<!-- TODO 
+	<issueManagement>
+		
+	</issueManagement>
+	-->
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<email>kontakt@guenter-zaepernick.de</email>
+			<name>guenter zaepernick</name>
+			<url>https://github.com/gz1</url>
+			<id>gz1</id>
+		</developer>
+	</developers>
+
+	<build>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<excludes>
+							<exclude>**/*IntegrationTest.java</exclude>
+							<exclude>**/*LiveTest.java</exclude>
+						</excludes>
+						<systemPropertyVariables>
+							<!-- <provPersistenceTarget>h2</provPersistenceTarget> -->
+						</systemPropertyVariables>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+						<compilerArgument>-proc:none</compilerArgument>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+	<properties>
+	
+		<!-- non-dependencies -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		 
+		<!-- commons and utils -->
+		<guava.version>27.0-jre</guava.version>
+
+		<swagger.version>2.9.2</swagger.version>
+		<rest-assured.version>3.2.0</rest-assured.version>
+
+	</properties>
+
+	<modules>
+		<module>common</module>
+		<module>common-client</module>
+		<module>common-test</module>
+		<module>masterdata-client</module>
+		<module>masterdata-webapp</module>
+		
+	</modules>
+
+</project>
