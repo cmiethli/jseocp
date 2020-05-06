@@ -7,6 +7,8 @@ public final class MasterdataMappings {
         public static final String PRIVILEGES = "privileges";
         public static final String ROLES = "roles";
         public static final String COMPUTERS = "computers";
+        public static final String PROBES = "proben";
+        
     }
 
     public static final class Singular {
@@ -14,6 +16,7 @@ public final class MasterdataMappings {
         public static final String PRIVILEGE = "privilege";
         public static final String ROLE = "role";
         public static final String COMPUTER = "computer";
+        public static final String PROBE = "probe";
     }
 
     public static final class Hateoas {
@@ -23,6 +26,7 @@ public final class MasterdataMappings {
         public static final String PRIVILEGE = HATEOAS + Plural.PRIVILEGES;
         public static final String ROLES = HATEOAS + Plural.ROLES;
         public static final String COMPUTERS = HATEOAS + Plural.COMPUTERS;
+        public static final String PROBES = HATEOAS + Plural.PROBES;
     }
 
     public static final String AUTHENTICATION = "authentication";
