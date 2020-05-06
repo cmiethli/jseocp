@@ -1,6 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<description>m1</description>
 	<name>masterdata-parent-m1</name>
 	<url>https://github.com/eugenp/restwithspring</url>
@@ -8,7 +10,7 @@
 	<groupId>de.wbstraining</groupId>
 	<artifactId>masterdata-parent-m1</artifactId>
 	<version>0.7.0-SNAPSHOT</version>
-	<packaging>pom</packaging>	
+	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -17,11 +19,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<!-- TODO 
-	<issueManagement>
-		
-	</issueManagement>
-	-->
+	<!-- TODO <issueManagement> </issueManagement> -->
 
 	<licenses>
 		<license>
@@ -77,8 +75,8 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
+						<!-- maven-compiler-plugin https://www.baeldung.com/maven-java-version -->
+						<release>12</release>
 						<compilerArgument>-proc:none</compilerArgument>
 					</configuration>
 				</plugin>
@@ -94,11 +92,12 @@
 	</build>
 
 	<properties>
-	
+
 		<!-- non-dependencies -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
-		 
+		<!-- Springboot https://www.baeldung.com/maven-java-version -->
+		<java.version>12</java.version>
+
 		<!-- commons and utils -->
 		<guava.version>27.0-jre</guava.version>
 
@@ -113,7 +112,7 @@
 		<module>common-test</module>
 		<module>masterdata-client</module>
 		<module>masterdata-webapp</module>
-		
+
 	</modules>
 
 </project>
