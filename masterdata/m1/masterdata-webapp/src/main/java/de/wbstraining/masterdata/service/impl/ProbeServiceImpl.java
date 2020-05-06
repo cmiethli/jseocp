@@ -1,5 +1,7 @@
 package de.wbstraining.masterdata.service.impl;
 
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.Triple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -61,5 +63,10 @@ public class ProbeServiceImpl extends AbstractService<Probe>
 		Example<Probe> example = Example.of(computer);
 		return dao.findOne(example)
 				.get();
+	}
+
+	public List<Probe> filtered() {
+
+		return null;
 	}
 }
