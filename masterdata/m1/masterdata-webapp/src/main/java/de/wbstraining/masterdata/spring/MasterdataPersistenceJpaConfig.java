@@ -21,62 +21,68 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({ "de.wbstraining.masterdata.persistence" })
-@PropertySource({ "classpath:persistence-${persistenceTarget:mysql}.properties" })
+@PropertySource({
+		"classpath:persistence-${persistenceTarget:mysql}.properties" })
+//@PropertySource({ "classpath:persistence-${persistenceTarget:h2}.properties" })
 @EnableJpaRepositories(basePackages = "de.wbstraining.masterdata.persistence.dao")
 public class MasterdataPersistenceJpaConfig {
 
-    @Autowired
-    private Environment env;
+	@Autowired
+	private Environment env;
 
-    public MasterdataPersistenceJpaConfig() {
-        super();
-    }
+	public MasterdataPersistenceJpaConfig() {
+		super();
+	}
 
-    // beans
+	// beans
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "de.wbstraining.masterdata" });
-        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(additionalProperties());
-        return em;
-    }
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+		final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+		em.setDataSource(dataSource());
+		em.setPackagesToScan(new String[] { "de.wbstraining.masterdata" });
+		final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		em.setJpaVendorAdapter(vendorAdapter);
+		em.setJpaProperties(additionalProperties());
+		return em;
+	}
 
-    @Bean
-    public DataSource dataSource() {
-        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-        dataSource.setUrl(env.getProperty("jdbc.url"));
-        dataSource.setUsername(env.getProperty("jdbc.username"));
-        dataSource.setPassword(env.getProperty("jdbc.password"));
-        return dataSource;
-    }
+	@Bean
+	public DataSource dataSource() {
+		final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+		dataSource.setUrl(env.getProperty("jdbc.url"));
+		dataSource.setUsername(env.getProperty("jdbc.username"));
+		dataSource.setPassword(env.getProperty("jdbc.password"));
+		return dataSource;
+	}
 
-    @Bean
-    public JpaTransactionManager transactionManager() {
-        final JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-        return transactionManager;
-    }
+	@Bean
+	public JpaTransactionManager transactionManager() {
+		final JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager
+				.setEntityManagerFactory(entityManagerFactory().getObject());
+		return transactionManager;
+	}
 
-    @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
-        return new PersistenceExceptionTranslationPostProcessor();
-    }
+	@Bean
+	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+		return new PersistenceExceptionTranslationPostProcessor();
+	}
 
-    //
+	//
 
-    final Properties additionalProperties() {
-        final Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto", "create-drop"));
-        hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+	final Properties additionalProperties() {
+		final Properties hibernateProperties = new Properties();
+		hibernateProperties.setProperty("hibernate.hbm2ddl.auto",
+				env.getProperty("hibernate.hbm2ddl.auto", "create-drop"));
+		hibernateProperties.setProperty("hibernate.dialect",
+				env.getProperty("hibernate.dialect"));
 
-        // setProperty("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
-        // setProperty("hibernate.ejb.naming_strategy", org.hibernate.cfg.ImprovedNamingStrategy.class.getName());
-        return hibernateProperties;
-    }
+		// setProperty("hibernate.hbm2ddl.auto", hibernateHbm2ddlAuto);
+		// setProperty("hibernate.ejb.naming_strategy",
+		// org.hibernate.cfg.ImprovedNamingStrategy.class.getName());
+		return hibernateProperties;
+	}
 
 }
