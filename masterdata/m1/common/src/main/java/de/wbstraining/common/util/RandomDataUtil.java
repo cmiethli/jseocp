@@ -29,4 +29,9 @@ public final class RandomDataUtil {
 		return LocalDateTime.of(d, t);
 	}
 
+	public static Integer randomProbeMesswert() {
+		return ThreadLocalRandom.current()
+				.nextInt(Constants.MW_LOWER_BOUND, Constants.MW_UPPER_BOUND + 1);
+	}
+
 }

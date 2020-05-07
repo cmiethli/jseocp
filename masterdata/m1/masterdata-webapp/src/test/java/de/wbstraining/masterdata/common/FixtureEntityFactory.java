@@ -3,11 +3,9 @@ package de.wbstraining.masterdata.common;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.ThreadLocalRandom;
 
 import com.google.common.collect.Sets;
 
-import de.wbstraining.common.util.Constants;
 import de.wbstraining.common.util.RandomDataUtil;
 import de.wbstraining.masterdata.persistence.model.Privilege;
 import de.wbstraining.masterdata.persistence.model.Probe;
@@ -23,8 +21,7 @@ public class FixtureEntityFactory {
 	// Probe
 	public static Probe createNewProbe() {
 		return createNewProbe(RandomDataUtil.randomLocalDateTime(),
-				ThreadLocalRandom.current()
-						.nextInt(Constants.MW_LOWER_BOUND, Constants.MW_UPPER_BOUND + 1));
+				RandomDataUtil.randomProbeMesswert());
 	}
 
 	public static Probe createNewProbe(final LocalDateTime zeitpunkt,
