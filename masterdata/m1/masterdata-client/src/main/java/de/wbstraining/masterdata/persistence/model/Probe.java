@@ -1,5 +1,7 @@
 package de.wbstraining.masterdata.persistence.model;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +32,7 @@ public class Probe implements INameableEntity, INameableDto {
 	@Column(name = "id", insertable = false, nullable = false)
 	private Long probeId;
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
@@ -43,14 +45,12 @@ public class Probe implements INameableEntity, INameableDto {
 	@Column(name = "ergebnis", nullable = true)
 	private String ergebnis;
 
-	private static long nameL = 1;
-
 	public Probe() {
-		this.name = String.valueOf(nameL++);
+		this.name = randomAlphabetic(4);
 	}
 
 	public Probe(LocalDateTime zeitpunkt, Integer messwert) {
-		this.name = String.valueOf(nameL++);
+		this.name = randomAlphabetic(4);
 		this.zeitpunkt = zeitpunkt;
 		this.messwert = messwert;
 		berechneErgebnis();
