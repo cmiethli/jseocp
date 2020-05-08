@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,15 +21,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import de.wbstraining.common.util.QueryConstants;
 import de.wbstraining.common.web.controller.AbstractController;
-import de.wbstraining.common.web.controller.ISortingController;
 import de.wbstraining.masterdata.persistence.model.Probe;
 import de.wbstraining.masterdata.service.IProbeService;
 import de.wbstraining.masterdata.util.MasterdataMappings;
 
 @Controller
 @RequestMapping(value = MasterdataMappings.Plural.PROBES)
-public class ProbeController extends AbstractController<Probe, Probe>
-		implements ISortingController<Probe> {
+public class ProbeController extends AbstractController<Probe, Probe> {
 
 	@Autowired
 	private IProbeService service;
@@ -39,37 +38,7 @@ public class ProbeController extends AbstractController<Probe, Probe>
 
 	// API
 
-	// find - all/paginated
-
-	@Override
-	@RequestMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE,
-			QueryConstants.SORT_BY }, method = RequestMethod.GET)
-	@ResponseBody
-	public List<Probe> findAllPaginatedAndSorted(
-			@RequestParam(value = QueryConstants.PAGE) final int page,
-			@RequestParam(value = QueryConstants.SIZE) final int size,
-			@RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-			@RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder,
-			final UriComponentsBuilder uriBuilder,
-			final HttpServletResponse response) {
-		return findPaginatedAndSortedInternal(page, size, sortBy, sortOrder,
-				uriBuilder, response);
-	}
-
-	@Override
-	@RequestMapping(params = { QueryConstants.PAGE,
-			QueryConstants.SIZE }, method = RequestMethod.GET)
-	@ResponseBody
-	public List<Probe> findAllPaginated(
-			@RequestParam(value = QueryConstants.PAGE) final int page,
-			@RequestParam(value = QueryConstants.SIZE) final int size,
-			final UriComponentsBuilder uriBuilder,
-			final HttpServletResponse response) {
-		return findPaginatedInternal(page, size, uriBuilder, response);
-	}
-
-	@Override
-	@RequestMapping(params = {
+	@RequestMapping(value = "/sorted", params = {
 			QueryConstants.SORT_BY }, method = RequestMethod.GET)
 	@ResponseBody
 	public List<Probe> findAllSorted(
@@ -78,7 +47,6 @@ public class ProbeController extends AbstractController<Probe, Probe>
 		return findAllSortedInternal(sortBy, sortOrder);
 	}
 
-	@Override
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<Probe> findAll(final HttpServletRequest request,
@@ -89,26 +57,13 @@ public class ProbeController extends AbstractController<Probe, Probe>
 
 	// find - one
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Probe findOne(@PathVariable("id") final Long id,
 			final UriComponentsBuilder uriBuilder,
 			final HttpServletResponse response) {
 		return findOneInternal(id, uriBuilder, response);
 	}
-
-	/*
-	 * @RequestMapping(value = "/{macAddress}", method = RequestMethod.GET)
-	 * 
-	 * @ResponseBody
-	 * public Probe findOne(@PathVariable("macAddress") final String
-	 * macAddress, final UriComponentsBuilder uriBuilder, final
-	 * HttpServletResponse response) {
-	 * // return findOneInternal(id, uriBuilder, response);
-	 * return service.findOne(macAddress);
-	 * // return findOneInternal(1L, uriBuilder, response);
-	 * }
-	 */
 
 	// create
 
