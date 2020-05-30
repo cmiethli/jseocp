@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,10 +23,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import de.wbstraining.common.interfaces.INameableDto;
 import de.wbstraining.common.persistence.model.INameableEntity;
-import de.wbstraining.masterdata.persistence.util.LocalDateAttributeConverter;
-import de.wbstraining.masterdata.persistence.util.LocalDateTimeAttributeConverter;
 
 /**
  *
@@ -78,20 +77,20 @@ public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 	@Column(name = "einsatzsuper6")
 	private int einsatzsuper6;
 	@Column(name = "gueltigab")
-	@Convert(converter = LocalDateAttributeConverter.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate gueltigab;
 	@Column(name = "gueltigbis")
-	@Convert(converter = LocalDateAttributeConverter.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate gueltigbis;
 	@Basic(optional = false)
 	@NotNull
 	@Column(name = "created")
-	@Convert(converter = LocalDateTimeAttributeConverter.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime created;
 	@Basic(optional = false)
 	@NotNull
 	@Column(name = "lastmodified")
-	@Convert(converter = LocalDateTimeAttributeConverter.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime lastmodified;
 
 	@Column(name = "version")
