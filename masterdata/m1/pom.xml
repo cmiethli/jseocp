@@ -39,7 +39,7 @@
 	</developers>
 
 	<dependencies>
-	<!-- fuer alle Submodule -->
+		<!-- fuer alle Submodule -->
 		<!-- test scoped -->
 
 		<!-- neu JUnit5 -->
@@ -95,6 +95,13 @@
 						<!-- maven-compiler-plugin https://www.baeldung.com/maven-java-version -->
 						<release>12</release>
 						<compilerArgument>-proc:none</compilerArgument>
+						<!-- Example8: https://docs.jboss.org/hibernate/orm/5.4/topical/html_single/metamodelgen/MetamodelGenerator.html -->
+						<annotationProcessorPaths>
+							<path>
+								<groupId>org.hibernate</groupId>
+								<artifactId>hibernate-jpamodelgen</artifactId>
+							</path>
+						</annotationProcessorPaths>
 					</configuration>
 				</plugin>
 
