@@ -8,6 +8,7 @@ package de.wbstraining.masterdata.persistence.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,7 +16,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -82,10 +82,13 @@ public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 	@Column(name = "version")
 	private Integer version;
 
-	@PrePersist // muss nicht in jeden Konstruktor geschrieben werden
-	private void prePersistMeth() {
-//this.name = String.valueOf(id); //geht leider Nicht, id wird erst beim persisten erstellt!
+//vor jeden KonstruktorAufruf
+	{
 		this.name = org.apache.commons.lang3.RandomStringUtils.randomAlphabetic(10);
+		created = Optional.ofNullable(created)
+			.orElse(LocalDateTime.now());
+		lastmodified = Optional.ofNullable(lastmodified)
+			.orElse(LocalDateTime.now());
 	}
 
 	public Gebuehr() {
