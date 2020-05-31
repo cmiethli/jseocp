@@ -5,8 +5,6 @@
  */
 package de.wbstraining.masterdata.persistence.model;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,8 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,26 +32,14 @@ import de.wbstraining.common.persistence.model.INameableEntity;
  */
 @Entity
 @Table(name = "gebuehr")
-@NamedQueries({
-	@NamedQuery(name = "Gebuehr.findAll", query = "SELECT g FROM Gebuehr g"),
-	@NamedQuery(name = "Gebuehr.findByGebuehrid", query = "SELECT g FROM Gebuehr g WHERE g.gebuehrid = :gebuehrid"),
-	@NamedQuery(name = "Gebuehr.findByGrundgebuehr", query = "SELECT g FROM Gebuehr g WHERE g.grundgebuehr = :grundgebuehr"),
-	@NamedQuery(name = "Gebuehr.findByEinsatzprotipp", query = "SELECT g FROM Gebuehr g WHERE g.einsatzprotipp = :einsatzprotipp"),
-	@NamedQuery(name = "Gebuehr.findByEinsatzspiel77", query = "SELECT g FROM Gebuehr g WHERE g.einsatzspiel77 = :einsatzspiel77"),
-	@NamedQuery(name = "Gebuehr.findByEinsatzsuper6", query = "SELECT g FROM Gebuehr g WHERE g.einsatzsuper6 = :einsatzsuper6"),
-	@NamedQuery(name = "Gebuehr.findByGueltigab", query = "SELECT g FROM Gebuehr g WHERE g.gueltigab = :gueltigab"),
-	@NamedQuery(name = "Gebuehr.findByGueltigbis", query = "SELECT g FROM Gebuehr g WHERE g.gueltigbis = :gueltigbis"),
-	@NamedQuery(name = "Gebuehr.findByCreated", query = "SELECT g FROM Gebuehr g WHERE g.created = :created"),
-	@NamedQuery(name = "Gebuehr.findByLastmodified", query = "SELECT g FROM Gebuehr g WHERE g.lastmodified = :lastmodified"),
-	@NamedQuery(name = "Gebuehr.findByVersion", query = "SELECT g FROM Gebuehr g WHERE g.version = :version") })
 @XmlRootElement
 public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Basic(optional = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+	@SequenceGenerator(name = "seq", initialValue = 1, allocationSize = 10)
 	@Column(name = "gebuehrid")
 	private Long gebuehrid;
 
@@ -96,13 +82,17 @@ public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 	@Column(name = "version")
 	private Integer version;
 
+	@PrePersist // muss nicht in jeden Konstruktor geschrieben werden
+	private void prePersistMeth() {
+//this.name = String.valueOf(id); //geht leider Nicht, id wird erst beim persisten erstellt!
+		this.name = org.apache.commons.lang3.RandomStringUtils.randomAlphabetic(10);
+	}
+
 	public Gebuehr() {
-		this.name = randomAlphabetic(10);
 	}
 
 	public Gebuehr(Long gebuehrid) {
 		this.gebuehrid = gebuehrid;
-		this.name = randomAlphabetic(10);
 	}
 
 	public Gebuehr(Long gebuehrid, int grundgebuehr, int einsatzprotipp,
@@ -115,7 +105,6 @@ public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 		this.einsatzsuper6 = einsatzsuper6;
 		this.created = created;
 		this.lastmodified = lastmodified;
-		this.name = randomAlphabetic(10);
 	}
 
 	public Long getGebuehrid() {
