@@ -26,7 +26,7 @@ import de.wbstraining.masterdata.service.IGebuehrService;
 import de.wbstraining.masterdata.util.MasterdataMappings;
 
 @Controller
-@RequestMapping(value = MasterdataMappings.Plural.GEBUEHREN)
+@RequestMapping(value = MasterdataMappings.Plural.GEBUEHRS)
 public class GebuehrController extends AbstractController<Gebuehr, Gebuehr> {
 
 	@Autowired
