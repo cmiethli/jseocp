@@ -1,4 +1,4 @@
-package de.wbstraining.masterdata.persistence.generators;
+package de.wbstraining.masterdata.persistence.generator;
 
 import java.io.Serializable;
 import java.util.Properties;
@@ -11,17 +11,21 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.LongType;
 import org.hibernate.type.Type;
 
-import de.wbstraining.masterdata.persistence.model.Gebuehr;
+import de.wbstraining.common.persistence.model.INameableEntity;
 
 //siehe u.a. https://thorben-janssen.com/custom-sequence-based-idgenerator/
 public class IdAndNameGenerator extends SequenceStyleGenerator {
 
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session,
-		Object entity) throws HibernateException {
-		Long currentId = (Long) super.generate(session, entity);
-		Gebuehr g = (Gebuehr) entity;
-		g.setName(String.valueOf(currentId));
+		Object entityObj) throws HibernateException {
+		Long currentId = (Long) super.generate(session, entityObj);
+//		generisch entity.setName() bekommen
+		@SuppressWarnings("unchecked") // XXX ohne Warning hinkriegen?
+		Class<? extends INameableEntity> classObj = (Class<? extends INameableEntity>) entityObj
+			.getClass();
+		classObj.cast(entityObj)
+			.setName(String.valueOf(currentId));
 		return currentId;
 	}
 

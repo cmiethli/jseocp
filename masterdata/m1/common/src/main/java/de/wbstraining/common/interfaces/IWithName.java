@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public interface IWithName extends Serializable {
 
-    String getName();
+	String getName();
+
+	void setName(String name);
 
 }

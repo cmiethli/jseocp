@@ -38,16 +38,17 @@ import de.wbstraining.common.persistence.model.INameableEntity;
 public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final String GENERATOR_NAME = "seqGen_gebuehr";
 
 	@Id
-	@GeneratedValue(generator = "seq_id")
-	@GenericGenerator(name = "seq_id", strategy = "de.wbstraining.masterdata.persistence.generators.IdAndNameGenerator", //
+	@GeneratedValue(generator = GENERATOR_NAME)
+	@GenericGenerator(name = GENERATOR_NAME, strategy = "de.wbstraining.masterdata.persistence.generator.IdAndNameGenerator", //
 		parameters = {
 			@Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
 	@Basic(optional = false)
 	@Column(name = "gebuehrid", nullable = false)
-	private Long id;
-// name wird im IdAndNameGenerator.java gesetzt >> name=id
+	private Long gebuehrid;
+// name wird im IdAndNameGenerator.java gesetzt >> name=gebuehrid
 	@Column(nullable = false, unique = true)
 	private String name;
 
@@ -87,7 +88,7 @@ public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 	@Column(name = "version")
 	private Integer version;
 
-	{// vor jeden KonstruktorAufruf
+	{// vor jedem KonstruktorAufruf
 		created = Optional.ofNullable(created)
 			.orElse(LocalDateTime.now());
 		lastmodified = Optional.ofNullable(lastmodified)
@@ -98,19 +99,27 @@ public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 	}
 
 	public Gebuehr(Long gebuehrid) {
-		this.id = gebuehrid;
+		this.gebuehrid = gebuehrid;
 	}
 
 	public Gebuehr(Long gebuehrid, int grundgebuehr, int einsatzprotipp,
 		int einsatzspiel77, int einsatzsuper6, LocalDateTime created,
 		LocalDateTime lastmodified) {
-		this.id = gebuehrid;
+		this.gebuehrid = gebuehrid;
 		this.grundgebuehr = grundgebuehr;
 		this.einsatzprotipp = einsatzprotipp;
 		this.einsatzspiel77 = einsatzspiel77;
 		this.einsatzsuper6 = einsatzsuper6;
 		this.created = created;
 		this.lastmodified = lastmodified;
+	}
+
+	public Long getGebuehrid() {
+		return gebuehrid;
+	}
+
+	public void setGebuehrid(Long gebuehrid) {
+		this.gebuehrid = gebuehrid;
 	}
 
 	public int getGrundgebuehr() {
@@ -188,20 +197,18 @@ public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 	@Override
 	public int hashCode() {
 		int hash = 0;
-		hash += (id != null ? id.hashCode() : 0);
+		hash += (gebuehrid != null ? gebuehrid.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are not
-		// set
 		if (!(object instanceof Gebuehr)) {
 			return false;
 		}
 		Gebuehr other = (Gebuehr) object;
-		if ((this.id == null && other.id != null)
-			|| (this.id != null && !this.id.equals(other.id))) {
+		if ((this.gebuehrid == null && other.gebuehrid != null)
+			|| (this.gebuehrid != null && !this.gebuehrid.equals(other.gebuehrid))) {
 			return false;
 		}
 		return true;
@@ -209,18 +216,18 @@ public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 
 	@Override
 	public String toString() {
-		return "wbs.corejpa.persistence.Gebuehr[ gebuehrid=" + id + " ]";
+		return "wbs.corejpa.persistence.Gebuehr[ gebuehrid=" + gebuehrid + " ]";
 	}
 // ####################### new ##################################
 
 	@Override
 	public Long getId() {
-		return id;
+		return gebuehrid;
 	}
 
 	@Override
 	public void setId(Long id) {
-		this.id = id;
+		this.gebuehrid = id;
 	}
 
 	@Override
@@ -228,6 +235,7 @@ public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
