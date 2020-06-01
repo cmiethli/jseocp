@@ -22,7 +22,7 @@ public final class MasterdataMappings {
 		public static final String LOTTOSCHEINZIEHUNG6AUS49S = "lottoscheinziehungen6aus49";
 		public static final String SPIELS = "spiele";
 		public static final String USERROLES = "userroles";
-		public static final String USERSS = "users";
+		public static final String USERSS = "userss";
 		public static final String USERS2S = "users2";
 		public static final String ZIEHUNGS = "ziehungen";
 	}
