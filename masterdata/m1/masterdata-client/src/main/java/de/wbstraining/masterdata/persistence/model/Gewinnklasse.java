@@ -16,7 +16,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,10 +27,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import de.wbstraining.common.interfaces.INameableDto;
 import de.wbstraining.common.persistence.model.INameableEntity;
+import de.wbstraining.masterdata.util.MasterdataMappings;
 
 /**
  *
@@ -57,8 +61,14 @@ public class Gewinnklasse
 	implements INameableEntity, INameableDto, Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final String GENERATOR_NAME = "seqGen_"
+		+ MasterdataMappings.Singular.GEWINNKLASSE;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = GENERATOR_NAME)
+	@GenericGenerator(name = GENERATOR_NAME, strategy = "de.wbstraining.masterdata.persistence.generator.IdAndNameGenerator", //
+		parameters = {
+			@Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "30") })
 	@Basic(optional = false)
 	@Column(name = "gewinnklasseid")
 	private Long gewinnklasseid;
@@ -117,8 +127,8 @@ public class Gewinnklasse
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "gewinnklasse") // JavaObject
 	private List<Gewinnklasseziehungquote> gewinnklasseziehungquoteList;
 
-	{// vor jeden KonstruktorAufruf
-		this.name = org.apache.commons.lang3.RandomStringUtils.randomAlphabetic(10);
+	{// vor jedem KonstruktorAufruf
+//		this.name = org.apache.commons.lang3.RandomStringUtils.randomAlphabetic(10);
 		created = java.util.Optional.ofNullable(created)
 			.orElse(LocalDateTime.now());
 		lastmodified = java.util.Optional.ofNullable(lastmodified)
@@ -326,6 +336,7 @@ public class Gewinnklasse
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}

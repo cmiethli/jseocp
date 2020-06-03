@@ -13,7 +13,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,10 +23,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import de.wbstraining.common.interfaces.INameableDto;
 import de.wbstraining.common.persistence.model.INameableEntity;
+import de.wbstraining.masterdata.util.MasterdataMappings;
 
 /**
  *
@@ -51,8 +55,14 @@ public class Bankverbindung
 	implements INameableEntity, INameableDto, Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final String GENERATOR_NAME = "seqGen_"
+		+ MasterdataMappings.Singular.BANKVERBINDUNG;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = GENERATOR_NAME)
+	@GenericGenerator(name = GENERATOR_NAME, strategy = "de.wbstraining.masterdata.persistence.generator.IdAndNameGenerator", //
+		parameters = {
+			@Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
 	@Basic(optional = false)
 	@Column(name = "bankverbindungid")
 	private Long bankverbindungid;
@@ -98,7 +108,7 @@ public class Bankverbindung
 	@ManyToOne(optional = false)
 	private Kunde kunde;
 
-	{// vor jeden KonstruktorAufruf
+	{// vor jedem KonstruktorAufruf
 		created = Optional.ofNullable(created)
 			.orElse(LocalDateTime.now());
 		lastmodified = Optional.ofNullable(lastmodified)
@@ -247,4 +257,8 @@ public class Bankverbindung
 		return name;
 	}
 
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
 }

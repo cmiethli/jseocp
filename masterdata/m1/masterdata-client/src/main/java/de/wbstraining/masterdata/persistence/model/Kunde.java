@@ -105,7 +105,7 @@ public class Kunde implements INameableEntity, INameableDto, Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "kunde")
 	private List<Adresse> adresseList;
 
-	{// vor jeden KonstruktorAufruf
+	{// vor jedem KonstruktorAufruf
 		this.name = org.apache.commons.lang3.RandomStringUtils.randomAlphabetic(10);
 		created = Optional.ofNullable(created)
 			.orElse(LocalDateTime.now());
@@ -142,6 +142,7 @@ public class Kunde implements INameableEntity, INameableDto, Serializable {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}

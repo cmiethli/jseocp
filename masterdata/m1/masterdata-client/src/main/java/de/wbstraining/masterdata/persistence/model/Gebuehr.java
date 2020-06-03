@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import de.wbstraining.common.interfaces.INameableDto;
 import de.wbstraining.common.persistence.model.INameableEntity;
+import de.wbstraining.masterdata.util.MasterdataMappings;
 
 /**
  *
@@ -38,7 +39,8 @@ import de.wbstraining.common.persistence.model.INameableEntity;
 public class Gebuehr implements INameableEntity, INameableDto, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private static final String GENERATOR_NAME = "seqGen_gebuehr";
+	private static final String GENERATOR_NAME = "seqGen_"
+		+ MasterdataMappings.Singular.GEBUEHR;
 
 	@Id
 	@GeneratedValue(generator = GENERATOR_NAME)

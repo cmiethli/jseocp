@@ -14,7 +14,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,10 +23,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import de.wbstraining.common.interfaces.INameableDto;
 import de.wbstraining.common.persistence.model.INameableEntity;
+import de.wbstraining.masterdata.util.MasterdataMappings;
 
 /**
  *
@@ -48,8 +52,14 @@ import de.wbstraining.common.persistence.model.INameableEntity;
 public class Spiel implements INameableEntity, INameableDto, Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final String GENERATOR_NAME = "seqGen_"
+		+ MasterdataMappings.Singular.SPIEL;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = GENERATOR_NAME)
+	@GenericGenerator(name = GENERATOR_NAME, strategy = "de.wbstraining.masterdata.persistence.generator.IdAndNameGenerator", //
+		parameters = {
+			@Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
 	@Basic(optional = false)
 	@Column(name = "spielid")
 	private Long spielid;
@@ -83,8 +93,7 @@ public class Spiel implements INameableEntity, INameableDto, Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "spiel") // JavaObject
 	private List<Gewinnklasse> gewinnklasseList;
 
-	{// vor jeden KonstruktorAufruf
-		this.name = org.apache.commons.lang3.RandomStringUtils.randomAlphabetic(10);
+	{// vor jedem KonstruktorAufruf
 		created = java.util.Optional.ofNullable(created)
 			.orElse(LocalDateTime.now());
 		lastmodified = java.util.Optional.ofNullable(lastmodified)
@@ -121,6 +130,7 @@ public class Spiel implements INameableEntity, INameableDto, Serializable {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}

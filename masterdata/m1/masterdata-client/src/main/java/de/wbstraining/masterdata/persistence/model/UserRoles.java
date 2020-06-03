@@ -11,7 +11,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,8 +21,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.SequenceStyleGenerator;
+
 import de.wbstraining.common.interfaces.INameableDto;
 import de.wbstraining.common.persistence.model.INameableEntity;
+import de.wbstraining.masterdata.util.MasterdataMappings;
 
 /**
  *
@@ -40,8 +44,14 @@ import de.wbstraining.common.persistence.model.INameableEntity;
 public class UserRoles implements INameableEntity, INameableDto, Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final String GENERATOR_NAME = "seqGen_"
+		+ MasterdataMappings.Singular.USERROLE;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = GENERATOR_NAME)
+	@GenericGenerator(name = GENERATOR_NAME, strategy = "de.wbstraining.masterdata.persistence.generator.IdAndNameGenerator", //
+		parameters = {
+			@Parameter(name = SequenceStyleGenerator.INCREMENT_PARAM, value = "1") })
 	@Basic(optional = false)
 	@Column(name = "user_rolesid")
 	private Long userRolesId;
@@ -60,10 +70,6 @@ public class UserRoles implements INameableEntity, INameableDto, Serializable {
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	@ManyToOne(optional = false)
 	private Users2 users2;
-
-	{// vor jeden KonstruktorAufruf
-		this.name = org.apache.commons.lang3.RandomStringUtils.randomAlphabetic(10);
-	}
 
 	public UserRoles() {
 	}
@@ -158,6 +164,7 @@ public class UserRoles implements INameableEntity, INameableDto, Serializable {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
