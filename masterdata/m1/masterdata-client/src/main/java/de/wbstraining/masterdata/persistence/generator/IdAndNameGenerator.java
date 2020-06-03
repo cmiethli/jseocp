@@ -21,11 +21,12 @@ public class IdAndNameGenerator extends SequenceStyleGenerator {
 		Object entityObj) throws HibernateException {
 		Long currentId = (Long) super.generate(session, entityObj);
 //		generisch entity.setName() bekommen
-		@SuppressWarnings("unchecked") // XXX ohne Warning hinkriegen?
-		Class<? extends INameableEntity> classObj = (Class<? extends INameableEntity>) entityObj
-			.getClass();
-		classObj.cast(entityObj)
-			.setName(String.valueOf(currentId));
+		if (entityObj instanceof INameableEntity) {
+			INameableEntity entity = (INameableEntity) entityObj;
+			if (entity.getName() == null) {
+				entity.setName(String.valueOf(currentId));
+			}
+		}
 		return currentId;
 	}
 
